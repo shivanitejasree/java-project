@@ -1,20 +1,29 @@
-pipeline{
+pipeline {
     agent any
 
-    tools {
-         maven 'maven'
-         jdk 'java'
-    }
-
-    stages{
-        stage('checkout'){
-            steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'github access', url: 'https://github.com/sreenivas449/java-hello-world-with-maven.git']]])
+    stages {
+        stage('Clone Repo') {
+            steps {
+                echo 'Cloning repo...'
+                // Git auto-checkout is handled by Jenkins
             }
         }
-        stage('build'){
-            steps{
-               bat 'mvn package'
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                sh 'mvn clean install' // Or any build command
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+                sh 'echo Running tests...' // Replace with actual test commands
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+                sh 'echo Deploy step...' // Add deploy logic here
             }
         }
     }
